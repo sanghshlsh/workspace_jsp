@@ -1,0 +1,143 @@
+1.몬스터
+체력을가진다.
+
+
+
+
+public class Monster{
+	private int hp;
+
+	public Monster(){
+	}
+	public Monster(int hp){
+		super();
+		Hp = hp;
+	}
+
+	public int getHp(){
+		return Hp;
+	}
+	public void setHp(int hp){
+		this.hp = hp;
+	}	
+
+	@Override
+	public String toString(){
+		return "Monster Hp:" +Hp;
+	}
+}
+
+
+무기와 관련된 클래스들
+Bow,Sword,Hammer
+Weapon
+구성요소 공격력,이름
+method() attack() describe()
+
+
+
+public abstract class Weapon{
+	private String name;
+	private int attackPower;
+
+	public Weapon(){
+	}
+	public Weapon(String name, int attackPower){
+		super();
+		this.name = name;
+		this.attackPower = attackPower;
+	}
+
+	getset
+	public int getAttacPower(){
+		return attackPower;
+	}
+	public void setAttackPower(){
+		this.attackPower = attackPower();
+	}
+
+	public String getName(){
+		return name;
+	}
+	public void setName(){
+		this.name() = name;	
+	}
+	
+
+	public void attack(Monster m){
+		describe();
+		int cHp = m.getHp;		
+		int rHp = cHp-attackPower;
+		m.setHp(rHp);
+		System.out.println("몬스터를 공격하였습니다.");
+		System.out.println(m);
+	}
+	
+	public abstract void describe();
+
+	@Override
+	public void String toString(){
+		return name;
+	}
+
+}
+
+
+*3
+public class Bow extends Weapon {
+	public Bow(){}
+	public Bow(String name, int attackPower){
+		super(String name, int attackPower);
+	}
+	
+
+	@Override
+	public void describe(){
+		System.out.println("활로 마구 쏩니다.");
+	}
+	
+
+	@Override
+	public void String toString(){
+		return super.getName();
+	}
+
+
+}
+Hero 무기3개 손에하나 무기로공격 교체가능 
+
+public class Hero{
+	private Weapon weapons[];
+	private Weapon hasWeapon;
+
+	
+	public Hero(){
+		weapons = new Weapon[] {new Bow("bow", 1), new Sword("sword", 1), new Hammer("hammer", 10)};
+		hasWeapon = weapons[0];
+	}
+	public Hero(Weapon weapons[],int idx){
+		this.weapons[] = weapons[];
+		this.hasWeapon = weapons[idx];	
+	}
+	
+	public void attack(Monster m){
+		hasWeapon.attack(m);
+	}
+
+	public changeWeapon(int idx){
+		hasWeapon = weapons[idx];
+		System.out.println(hasWeapon + " 으로 무기 변경하였습니다.");
+	}
+}
+
+public class MainEx{
+	public static void main(String[] args){
+
+
+
+
+	}
+}
+
+
+

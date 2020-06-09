@@ -1,0 +1,6 @@
+package kr.co.domain;
+
+public class PageTO {
+	private int curPage = 1;
+	private int perPage = 10;//한페이지 몇글 보여주는지
+}

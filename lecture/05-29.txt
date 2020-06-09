@@ -1,0 +1,70 @@
+
+http://tomcat.apache.org/
+
+JSTL(Java Standard Tag Library)
+
+좌측 taglibs	->	우측 download	->Apache Taglibs Downloads  탭 Apache Standard Taglib
+
+Standard 1.1 다운로드	->	binaries	->jakarta-taglibs-standard-1.1.2.zip  
+
+압축풀고 그 안 lib폴더	jstl.jar, standard.jar 복사
+
+tomcat 설치폴더 lib에 붙여넣기
+
+
+선언해야 사용 가능
+jsp파일 상단에
+<%@ %> directive tag로 선언
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+==============================================================================================
+Project MMS2
+select.jsp
+JSTL-> EL써야한다.
+<c:forEach items="${list}" var="dto">
+<a href="selectById.do?id=${dto.id}">${dto.id} : ${dto.name} </a><br>	
+</c:forEach>
+위아래동일
+<%
+List<MemberDTO> list = (List<MemberDTO>) request.getAttribute("list");
+	if (list != null) {
+		for (int i = 0; i < list.size(); i++) {
+			MemberDTO dto = list.get(i);
+			out.print("<a href='selectById.do?id=" + dto.getId() + "'>");
+			out.print(dto.getId());
+			out.print(":");
+			out.print(dto.getName());
+			out.print("</a>");
+			out.print("<br>");
+		}
+	}
+%>
+//
+CommandAction class
+
+mvc2 patternS
+
+
+client ->	server
+
+
+server
+	-controller(servlet)
+	model로갈지 view로갈지 controller가 선택
+
+	-model(class)			-view(jsp)
+			s     e     r      v      e      r
+작업할 내용 client-> controller->model->controller->view->client
+
+어제까지의 clinet -> controller -> model -> view ->clinet
+	model->view 과정이 잘못되서 수정하는작업
+
+CommandAction class 생성 (val boolean isRedirect, String where)
+기존 model에 있던 forwarding코드를 CommandAction객체로 return하도록 변경
+
+그로인해 FrontController(servlet)의 execute method가 CommandAction 객체를 리턴하므로
+그 객체의 정보를 이용하여 forwarding
+
+==============================================================================================
+
+1.
+select.do

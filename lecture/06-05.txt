@@ -1,0 +1,86 @@
+Project : Test060501
+AJAX
+Asynchronous JavaScript And XM
+
+
+event.preventDefault();
+--button click시 form action 실행을 막아주는 키워드
+
+var id = $("#id").val();
+$("#id")에 해당하는 value return
+
+type:"get" 
+전송방식 get/post결정 default get
+url:"idcheck" 
+url default 현재페이지
+
+data:{
+id(request parameter name) : id(var id)
+
+}
+서버로 보낼 데이터
+dataType
+서버에서 받을 데이터 형식
+success 요청 성공시
+
+
+
+https://cofs.tistory.com/404
+
+https://blog.naver.com/seyeon47/221973562579
+https://blog.naver.com/blogpyh/220095293310
+
+
+
+
+Project : Board
+
+답변형 게시판 - 답변 글을 원글 아래에 붙여 넣을 수 있는 게시판
+댓글형 게시판 - 게시글에 댓글달수 있는 게시판
+
+작성할 게시판
+답변형 게시판
+
+table 생성
+
+
+create table board(
+	num number(4) primary key,
+	writer varchar2(21) not null,
+	title varchar2(60) not null,
+	content varchar2(1000),
+	writeday date default sysdate,
+	readcnt number(4) default 0,
+	repRoot number(4),
+	repStep number(4),
+	repIndent number(4)
+);
+
+insert into board (num, writer, title, content, repRoot, repStep, repIndent)
+values
+(1,'kim','test1','ok',1,0,0);
+insert into board (num, writer, title, content, repRoot, repStep, repIndent)
+values
+(2,'koo','test2','ok',2,0,0);
+변수설명
+num id처럼사용
+writer 작성자 
+title 제목 
+content 내용 
+writeday 작성일
+readcnt 조회수 
+reproot 컬럼의 목적 : 답글을 원글에 붙어있게 하기 위한 컬럼 
+	원글은 자신의 num값을 받고 답글은 원글의 reproot값을 가져온다.
+repstep	컬럼의 목적 : 원글-답글1-답글1-1 - 답글2 이런형식으로 정렬 순서를 지정하기 위한 컬럼
+	원글의 repstep은 0을받고 답글의 repstep은 원글의 repstep+1, 
+	새로운 답글이 생성되면 
+	repRoot값이 같고 
+	원글의 repstep값보다 큰 
+	기존 답글의 repstep값을 1씩 증가
+
+
+repindent 컬럼의 목적 : 답글의 들여쓰기
+	원글 : 0 	답글 : 원글 +1
+
+정렬시 reproot로 orderby!
+selct * from board order by repRoot desc, repStep asc

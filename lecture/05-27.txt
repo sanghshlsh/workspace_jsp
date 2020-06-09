@@ -1,0 +1,83 @@
+Project Test052701
+
+forwarding
+dispatcher 와 redirect의 차이
+
+		RequestDispatcher dis = request.getRequestDispatcher("test2");
+		dis.forward(request, response); 
+dispatcher	-> 	다른 servlet에관한 forward request가 있을 떄 서버내부에서 해결 response
+			request와 response가 하나존재		(request가 단 한개/request 스코프 유지)
+			request가 단하나라 동일하므로 url 주소가 바뀌지않는다.
+			get방식 -> get방식 유지
+			post방식-> poset방식 유지
+		
+		response.sendRedirect("test4");
+redirect	->	다른 servlet에대한 forward request가 있을 떄 서버 내부에서 해결하지 않고
+			다시 request 보내라는 response를 보냄 마지막 request로 url 주소가 결정
+			따라서 url 주소가 변경
+			request와 response가 forwarding 수만큼 증가(request가 최소 2개)
+			get방식 -> get방식 유지
+			post방식-> get방식 변경
+
+
+test1->test2 forwarding 하라
+doGet->doGet
+doPost->doPost
+
+
+일반적으로 forwarding이라하면 dispatcher
+
+test3->test4 redirect하라
+doGet->doGet
+doPost->doGet
+
+scope-https://victorydntmd.tistory.com/155
+세션-로그인 application -방문자수 그 외 request
+request 하는일
+1. 한글 지원
+	request.setCharacterEncoding("utf-8");
+2. client가 보내준 데이터 넘겨받기
+	String val = request.getParameter("name");
+3. 데이터를 저장할 수 있는 기능(data binding)
+	request.setAttribute("name",Object);//모든 데이터 타입 저장 가능
+			      key    value
+	-이 데이터받는방식 request.getAttribute("name"); 이를 해당 type의 데이터형으로 받아준다.
+	-request.getAttribute는 Object를 반환하기에 강제형변환(Casting)필요
+	-list<StringBuffer> list = (list<StringBuffer>) request.getAttribute("list");
+	-redirect에서는 사용불가 request에 데이터를 저장하는데 redirect에서는 request가 변하므로 저장된 데이터를 받을 수 없다.
+4. dispatcher
+5. servlet path 알아내기
+	String uri = request.getRequestURI();	-ex)/Test052701/*.do
+	String ctxp = request.getContextPath(); -ex)/Test052701
+	String sp  = uri.substring(ctxp.length());-ex)/*.do
+
+
+test1->2 포워딩(post방식)
+request에 데이터 바인딩
+
+name				값
+driverClassName		"oracle.jdbc.driver.OracleDriver"
+
+request.getParametervalues();->return String[]
+
+
+
+Project Test052702
+초기화 파라미터 = 특정 서블릿에서만 사용 가능한 파라미터
+->web.xml 매핑할때 만든 <servlet>에 <init-param>을 작성하여 선언
+호출할때는 getInitParameter("name")을 통해 호출
+
+컨텍스트 파라미터=프로젝트 파라미터 -> 프로젝트 전반에 걸쳐 사용가능
+<servlet>위에 <context-param>을 작성하여 선언
+호출할때는 ServletContext application = getServletContext(); 를통해 getInitParameter("name")을 통해 호출
+
+
+
+
+ 
+
+Command class에서 하는일
+1.client가 보내준 데이터 획득 및 가공
+2.DAO 객체 생성 및 해당 메서드 호출
+3.Data binding
+4.forwarding

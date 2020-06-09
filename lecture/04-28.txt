@@ -1,0 +1,97 @@
+1.Project 생성 String Ex
+
+2.
+항상 pakage
+com.naver
+kr.co.ca
+두개 생성
+
+com.naver에 클래스 몰아넣을것이고
+항상kr.co.ca에는 MainEx를만들고 main method를 생성한다.
+
+==(동일성비교)는 기본자료형에서만 사용한다.
+equals(동등성비교)
+3. 변수 선언 공식
+자료형 변수명 = 자료형에 맞는 값;
+boolean: truem false
+char: '' char c = 65; == char c = 'A'; char a = 97 == char a = 'a';
+byte : -128~127
+short
+int : 21억
+long : long a = 333L; or long a = 333l
+float : float f = 3.123f; float f = 3.123F
+double : double d = 3.13;
+
+참조 자료형들은 
+자료형 참조자료형의변수명(refference)   = new(heap 영역에 공간할당을 위해) 생성자():
+자료형 refference = new constructor();
+
+String msg = "hello";(약식)(암시적 묵시적 객체생성법) Constant Pool
+String msg = new String("hello");(정통)(명시적 객체생성법) 이것이 heap memeory 에 저장
+이 둘의 차이는 메모리 생성과정에서 다르다.
+
+
+
+String class의 불변적 성격
+String msg = new String("hello");
+msg = new String("gogo");
+System.out.println(msg);
+
+출력값은? gogo
+무엇이 불변적인 성격인가?
+msg 는 hello에서 gogo로 바뀌었지만
+가비지컬렉터에 의해 hello가 사라지기 전까진 hello는 남아있다.
+이러한 불변적 성격 때문에 String += "" 같은 이런작업이 반복되면 많은 메모리를 요구하기에 StringBuffer 사용을 권장한다.
+
+
+
+
+
+0 ,1 ,2 ,3 ,0 ,1 ,2 ,3 ,0 ,1 ,2 ,3, 0, 1, 2 ,3 , ....
+Test me7
+
+String class의 method
+charAt(index)
+
+me81() 메소드는 
+문자열과그 문자열의 특정 인덱스를 넘겨 받아서
+그 인덱스에 해당하는 문자를 출력하는 기능을 갖고 있다.
+
+me142() 메소드는
+파일명을 외부에서 받아(받는 파일명 _구분된 파일명)
+원래 파일명을 반환하는 기능을 갖고 있음.(반환하는 파일명 _뒤의 파일명)
+
+
+me15 0000 1111 2222 3333 4444
+
+me16
+소수 1과 자기자신 외에는 약수가 없는 수 찾기
+2부터 자기자신-1 까지 나눠보기
+
+start~end 소수찾기
+StringTokenizer
+id 나이 등급 포인트 출력
+
+
+StringEx
+묵시적 명시적 객체 생성법
+동등성비교
+hashCode equals Overriding
+String class의 불변적 성격
+String class의 method들
+charAt(int index)
+contains(CharSequence s)
+endWith(String suffix)
+indexOf(String s) (String s, int fromindex)
+lastIndexOf()
+length()
+trim()
+substring(int beginindex, int endindex)
+split(String 구분자)
+StringTokenizer 변수명 = new StringTokenizer(String s, delim, (true/false));
+hasMoreTokens()
+nextToken()
+countTokens()
+
+split()과 StringTokenizer의 차이점
+배열은 데이터를 여러개 담으려고 사용하기도 하지만 주로 사용하는 이유는 반복문을 사용하기 위해서 이다.

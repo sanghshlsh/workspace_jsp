@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
+  <display-name>HiWorld</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  
+  <!-- 이곳에 작성 -->
+  <servlet>
+  	<servlet-name>mys1</servlet-name>
+  	<servlet-class>com.naver.MyServlet1</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>mys1</servlet-name>
+  	<url-pattern>/ms1</url-pattern><!-- 이패턴에 해당하는 servlet의 이름이 바로위의 servlet name -->
+  	<!-- url 패턴은 두가지가 있는데 1./뒤에 입력 2. *.do 확장자형으로입력  -->
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>cmys1</servlet-name>
+  	<servlet-class>kr.co.ca.MyServlet1</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>cmys1</servlet-name>
+  	<url-pattern>/cms1</url-pattern>
+  </servlet-mapping>
+  
+  
+  
+  
+  
+</web-app>

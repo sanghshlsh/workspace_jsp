@@ -1,0 +1,119 @@
+window-preferences-java-build path-classpath variables-jre_lib path를 보고
+C:\Program Files\Java\jre1.8.0_241\lib\ext에 ojdbc6 있는지 확인
+
+jdbc는 crud위주로 학습한다.
+jdbc 의 crud는 auto commit
+
+
+저장공간을 만들어주는 class DTO/TO
+
+
+
+
+
+
+J	java
+DB	database
+C	connectivity
+
+D	Data(Base)
+A	Access
+O	Object
+
+
+
+TestDAO
+
+//db와 연동하기위해 oracle url oracle 계정id비밀번호 등등을 알아야 한다.
+
+private final String DRIVERNAME = "oracle.jdbc.driver.OracleDriver";
+//drivername은 jre system library -> oracle6.jar ->jdbc->oracledriver 들어가서 fullpackage명을 복사하라(오타가많이나서)
+//package+classname -> full package명
+
+private final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
+//data source explorer -> new oracle우클릭-> properties ->driver properties -> connection url 주소 복사
+
+private final String USERNAME = "ca2";//username은 대소문자 상관없다.
+private final String PASSWORD = "ca2";//password는 대소문자 구분
+내가 생성했던 sql 계정의  id password입력
+
+
+
+pstmt 전송
+pstmt.executeQuery();---->select sql문은 이것을 사용 전송
+//반환형 ResultSet 이또한 close해야하고 pstmt보다도 먼저 close되어야한다. close되야 하기에 
+try 밖에 선언해야한다.
+select메소드는 resultset타입을 list로 바꿔  return해줘야한다.
+
+pstmt.excuteUpdate();---->그 외 모든 sql문은 이것을 사용 전송
+
+
+statement
+stmt의 경우는
+praparestatment가아닌 createStatement
+
+executeQuery에 sql을 받는다.
+
+
+
+Transaction 상황
+하나의 사건으로 여러개의 변화가 발생
+
+cud(일경우가많다.)
+ex)
+B가 A에게 1만원송금시 
+
+B계좌 -1만원 차감
+-----------정전------------
+A계좌 +1만원 증감
+
+이럴때  B계좌에서 차감만된다면 문제발생
+이를 해결하기위해 Transaction이 있다.
+
+
+
+
+
+
+
+
+
+
+
+
+connection 기본구조
++ preparedstatement 
+connection,prepardstatment,sql 선언- trycatchfinally(trycatch) 연결종료
+
+	Connection conn = null;		
+		connection은 무겁기때문에 필요할때마다 생성하여 사용 후 사용을 마친 후 
+		삭제(try-catch를 한뒤 finally에서 try-catch를 한번 더 이용하여)
+	PreparedStatement pstmt = null;
+	String sql = "sql문";//변수는 ?로 표기 앞에서부터 index 1~n
+
+	try {
+	conn = DriverManager.getConnection(URL, USER, PASSWORD); //conn 객체생성(connection interface기때문에 new사용x)
+	pstmt = conn.prepareStatement(sql);//sql문 preparedstatement에 입력
+	//sql문에 입력할 ? 정보가 있다면
+	pstmt.setString(index, ?정보);//set자료형 
+
+	pstmt.executeUpdate();//pstmt db에 전송(select문은 excuteQuery(); 사용)
+
+	} catch (Exception e) {
+		e.printStackTrace();
+		
+	} finally {
+		try {
+			if(pstmt != null){
+				pstmt.close();//이동중인 자료를 보호하기위해 conn보다 먼저 종료
+			}
+
+			if(conn != null){
+				conn.close();
+			}
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+	} connection 기본 구조 try-catch-finally 그리고 finally에 한번더 try-catch
+
+PreparedStatment를 종료할 때는 connection보다 먼저 종료해야한다.

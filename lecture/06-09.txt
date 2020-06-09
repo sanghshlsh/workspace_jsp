@@ -1,0 +1,45 @@
+paging
+
+list.do?curPage=1
+등으로 curPage Query추가로 페이지결정
+총 게시글 갯수를 알아야 paging처리 가능
+
+
+
+Project Board3 진행
+list.jsp 페이징작업
+
+<c:forEach begin="1" end="10" var="idx">
+<a href="list.do?curPage=${idx }">${idx }</a> &nbsp; &nbsp; 
+</c:forEach>
+1/10 이부분은 동적으로 바꿔줘야함
+
+-->
+frontcontoller
+com = new ListCommand();->com = new ListPageCommand();
+변경
+parameter생성 받아야함
+
+
+oracle에서만 지원하는 컬럼
+rownum-별칭을줘 사용해야한다.
+
+페이징을 위해서는
+기존 ListCommand에서 사용하던 list 바인딩으로는
+표현을 못하는 데이터가 있기에
+pageTO DTO를 만들거나 map를 사용하여 진행해야 한다.
+
+pageTO 사용이 좀 더 일반적
+
+PageTO의 변수들
+curPage		: 현재페이지
+perPage		: 한페이지에 글 몇개가 들어갈지
+pageLine	: 화면에 보여줄 페이지 넘버링의 갯수(ex- 1~10 10개 11~14 4개)
+amount		: 게시글 총 갯수
+
+이하 종속변수들
+totalPage	: 총페이지수
+startNum	: 현재페이지에서 보여줄 rowNum값 start
+endNum		: 현재페이지에서 보여줄 rowNum값 end
+beginPageNum	: 현재페이지에서 보여줄 페이지 넘버링 (ex 1~10이면 1)
+stopPageNum	: 현재페이지에서 보여줄 페이지 넘버링 (ex 1~10이면 10)

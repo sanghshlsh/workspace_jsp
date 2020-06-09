@@ -1,0 +1,289 @@
+Db 설치
+https://www.oracle.com/kr/downloads/
+Database 11g Enterprise/Standard Editions
+-Oracle Database Express Edition
+-Oracle Database 11g Release 2 Express Edition for Windows 64
+
+
+학원오라클 sys system계정 비밀번호 sys1234
+
+C:\oraclexe\app\oracle\product\11.2.0\server\jdbc\lib(driver존재)
+ojdbc6.jar //jdbc 사용할 때 이것을 사용할 것
+내PC 우클릭
+관리
+서비스 및 응용프로그램
+-서비스
+-OracleXETNSListener
+-OracleServiceXE(이 두가지가 중단되어 에러가 나온다면 이곳에서 직접 실행상태를 만들어라)
+
+
+
+실행 cmd - 
+sqlplus 입력
+system계정 사용 
+Enter user-name : system 입력
+Enter password : (주의/ 데이터를 입력받아도 커서가 움직이지 않는다.)
+
+exit
+
+
+sqlplus 계정명/패스워드 입력으로도 한번에 가능(단 비밀번호 노출)
+==========================================================================================
+db ex
+	column	column	column	column	column
+
+		id	name	age 	address	phone
+record		m001	세종 	55	서울	0123-12301-412		이것들을 레코드라고함
+record		m001	세종 	55	서울	0123-12301-412		
+record		m001	세종 	55	서울	0123-12301-412		
+
+
+CRUD
+
+Create		입력
+Read(Retrieve)	조회
+Update		수정
+Delete		삭제
+
+
+
+
+=========================================================================================
+
+sql문		:	맨 마지막에 ;을 붙임
+sqlplus명령어	:	맨 마지막에 ;을 붙일 수도 있고 안 붙일 수도 있음
+
+ex) exit ,quit -> sqlplus명령어
+
+
+
+=========================================================================================
+테이블의 데이터를 입력 조회 수정 삭제(CRUD)를 DML이라고 한다.
+DML : Data Mainpulation Language(데이터 조각 언어)
+시작문들
+intsert 
+select
+update
+delete
+
+=========================================================================================
+DB에서 객체를 만들거나 수정하거나 삭제하는 작업을 할 때 사용하는 sql을 DDL이라고 한다.
+DDL = (Data Definition Language)
+create
+alter
+drop
+=========================================================================================
+DB작업 중에 사용자에게 권한을 주는 작업을 할 떄 사용되는 sql 을 DCL이라고 한다..
+
+DCL = Data Control Language
+grant 
+revoke
+
+
+TCL(commit, rollback)
+
+==========================================================================================
+계정생성 DDL이용(계정도 객체)
+CREATE USER ca(계정명) IDENTIFIED BY(패스워드 구분자) ca(패스워드);
+create user ca identified by ca(대소문자 상관없으나 대문자 권장)
+sql문으로 ; 붙어야 한다
+
+
+CONN ca(id)/ca(password)
+권한이 없기에 바로 사용 불가
+
+유저확인
+SHOW USER
+
+ca계정에 권한부여
+GRANT CONNECT, RESOURCE, DBA TO ca;
+
+ca계정으로부터 connect권한 회수
+REVOKE CONNECT FROM ca;
+
+ca계정 권한 확인
+SELECT * FROM DBA_ROLE_PRIVS WHERE GRANTEE = 'CA';
+
+계정 비밀번호 변경
+ALTER USER ca IDENTIFIED BY ca2;
+
+
+ca계정 삭제
+DROP USER ca;
+
+
+
+
+=========================================================================================
+
+테이블 생성
+
+CREATE TABLE test(	(테이블명) 
+id VARCHAR2(6), 	(varchar2(자료형)(6) 6byte 할당)(oracle에서 한글은 한글자3바이트)
+name VARCHAR2(21),
+age NUMBER(3), 		(숫자의 갯수가 3개까지 넣을 수 있다.(0~999))
+address NVARCHAR2(7)	(7자까지 받을 수 있다.)
+);
+
+CREATE TABLE test (
+id VARCHAR2(6),
+name VARCHAR2(21),
+age NUMBER(3),
+address NVARCHAR2(7)
+);
+
+테이블 삭제
+DROP TABLE test;(제약조건이 있으면 삭제가 안될 수도 있다.)
+DROP TABLE test CASCADE CONSTRAINTS;(제약조건을 무시하고 삭제할 수 있다.)
+
+테이블 명 변경
+RENAME test2 to tbl_test2;
+
+id(char 5), name(char 12), age(number 3) 컬럼으로 이루어진 test2 테이블을 생성하시오.
+
+CREATE TABLE test2(
+id CHAR(5),
+name CHAR(12),
+age NUMBER(3)
+);
+
+
+EX) 둘다 ABE입력가정
+CHAR	(5) :	ABE ->5글자 입력. 공백2개를 더해 데이터로 인식
+VARCHAR2(5) :	ABE -> 3글자만 입력됨, 
+=========================================================================================
+table2 보기
+desc test2
+
+table 수정
+talbe2 테이블에 address추가학싶다.
+ALTER TABLE test2 ADD address VARCHAR2(100);
+ALTER TABLE test2 ADD phone CHAR(11);
+
+column 수정
+ALTER TABLE test2 MODIFY phone VARCHAR2(11);
+ALTER TABLE test2 MODIFY name VARCHAR2(21);
+
+column명 변경
+ALTER TABLE test2 RENAME COLUMN phone TO tel;
+ALTER TABLE test2 RENAME COLUMN age TO nai;
+
+
+column 삭제
+
+ALTER TABLE test2 DROP COLUMN phone;
+ALTER TABLE test2 DROP COLUMN address;
+
+=========================================================================================
+
+CREATE TABLE employee(
+eid VARCHAR2(6),
+ename VARCHAR2(21),
+depart VARCHAR2(21)
+);
+
+
+정보넣기
+eid	ename	depart
+e001	홍길동	인사팀
+e002	김유신	영업부
+	유관순	홍보팀
+e004		비서팀
+
+INSERT INTO employee (eid, ename, depart)
+values
+('e001','홍길동','인사팀');
+
+INSERT INTO employee (eid, ename, depart)
+values
+('e002','김유신','영업부');
+INSERT INTO employee (ename, depart)
+values
+('유관순','홍보팀');
+INSERT INTO employee ( depart, eid)
+values
+('인사팀','e004');
+
+입력 데이터 읽기
+SELECT * FROM employee;
+
+ename= '유관순' 인 eid찾기
+SELECT EID FROM employee WHERE ename='유관순';
+
+DML 작업을 할 때,
+(C,U,D)
+commit(exit입력 종료) , rollback(x눌러 그냥 종료(운좋을때만 에러날수도 있다. 하지마라))
+commit;		명령어입력
+rollback;	명령어입력
+
+ROLLBACK,COMMIT
+
+INSERT INTO employee
+(eid, ename, depart)
+values
+('e005', 'kim', '관리부');
+ROLLBACK;
+COMMIT;
+
+
+롤백(세이브포인트 활용)+롤백
+INSERT INTO employee
+(eid)
+values
+('e006');
+
+
+INSERT INTO employee
+(eid)
+values
+('e007');
+----------
+SAVEPOINT a;
+----------
+INSERT INTO employee
+(eid)
+values
+('e008');
+
+INSERT INTO employee
+(eid)
+values
+('e009');
+
+SELECT eid from employee;
+ROLLBACK TO a;
+SELECT eid from employee;
+ROLLBACK;
+
+모든 column이 들어있는 레코드는 column명들을 기입하지 않아도 된다. 하지만 순서는 따라줘야 한다.
+INSERT INTO employee
+values
+('e006', 'kim', '영업부');
+
+=========================================================================================
+
+정보수정update
+
+UPDATE employee 
+SET
+ename = 'park',
+depart = '인사팀';
+//이대로 끝내면 모든 컬럼들이 저대로 바뀐다.
+WHERE
+eid = 'e005';
+조건
+
+
+UPDATE employee 
+SET
+ename = 'park',
+depart = '인사팀'
+WHERE
+eid = 'e005';
+
+
+
+Poject
+ScannerEx
+project
+Fibo

@@ -1,0 +1,20 @@
+package kr.co.domain;
+
+import java.io.Serializable;
+
+public class BoardDTO implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private int num;
+	private String writer;
+	private String title;
+	private String content;
+	private String writeday;
+	private int readcnt;
+	private int repRoot;
+	private int repStep;
+	private int repIndent;
+}

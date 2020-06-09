@@ -1,0 +1,144 @@
+project Test052601 -  MyServlet2
+클라이언트(사용자)가 서버로 데이터를 전송
+그 데이터를 서버에서 획득
+		데이터
+클라이언트	------>		서버
+
+//////어제는    <------		//////
+
+ex
+http://localhost:8089/Test052601/ms1?id=tt&pw=123
+이있을때
+id = tt
+pw = 123 에서
+id/pw = 파라미터네임
+tt/123 = 파라미터밸류
+즉 파리미터는 -->> 파리미터 네임 = 파라미터 밸류 형식으로 구성
+
+
+request.getParameter("");를 통해 서버에서 데이터를 받을 떄는 모든 데이터를 String타입으로 받는다.
+때문에 인트형을 받으려면 wrapper클래스를통해 integer.parseInt/valueof를 사용 변환하라
+
+
+name과 age를 클라이언트의 브라우져에 출력하세요
+
+500에러가뜬 이유는 nullpointexception때문
+String형을 int형으로바꿔주는 문장을 if문을 통해 !null일때만 실행하도록 감싸준다.
+
+
+클라이언트에서 서버로 데이터를 보내기위해서는
+form으로 감싸 name을 개별적으로 설정하여 다음과 같이 보낸다.
+ex)
+<form action="ms2" method="post">
+	ID : <input name="id"><br>
+	PW : <input name="pw"><br>
+	<input type="submit" value="로그인">
+</form>
+
+
+
+
+
+클라이언트 -> 서버 데이터전송중
+영문데이터전송 문제x
+한글데이터전송 제대로된 값 전송실패
+
+response.setContentType을통한 인코딩작업이 있음에도 이는 서버 -> 클라이언트 전송과정의 인코딩이기때문에
+한글을 전송할 때 이미 꺠진 데이터가 전송된다.
+request.setChararcterEncording을통한 인코딩작업을 통해 해결
+단 이는 post method에서만 해결되고
+
+get method는 servers.xml에서 수정하는방식과 또다른 방법이 하나더있다.
+servers -> tomcat~ -> servers.xml 65번 line connector에 속성추가 ( URIEncoding = "utf-8" )
+이는 앞으로 모든 프로젝트의 get method에 클라이언트 -> 서버 한글 데이터 전송문제를 해결
+
+
+
+Project MMS1
+
+crud작업
+fowarding
+fowarding은 dispatcher방식과 redirect방식이있는데
+dispatcher방식-->이방식은 기존 주소창의 주소가 바뀌지 않는다.
+
+RequestDispatcher dis = request.getRequestDispatcher("path"); 
+을통해 RequestDispatcher 타입의 변수로 받아주고
+이를통해 forward method를 사용 path로 보내준다.(dis.forward(request, response); )
+
+redirect방식 --> 이방식은 기존 주소창의 주소가 바뀐다.
+이는 response를 통해 sendRedirect method를 사용한다. (response.sendRedirect("select");)
+
+JNDI기술-Java Naming Directory Interface 
+
+connection pool 작업(연동)
+
+servers -> tomcat -> context.xml 맨아래</context>위에 작성 ( 이또한 따로 작성할 수도 있지만 모든 프로젝트에 적용받게 하기위해 이곳에작성)
+이것은 암기해야한다.
+<Resource
+	name="jdbc/oracle11g"		//이름이 바뀌어도 상관없으나 이렇게 작성하는것이 보편적
+	auth="Container"  		// -> tomcat
+	type="javax.sql.DataSource"	
+	username = "ca3"   		//sql 계정/패스워드
+	password = "ca3"
+	driverClassName = "oracle.jdbc.driver.OracleDriver"
+	url = "jdbc:oracle:thin:@loaclahost:1521:xe"
+	---기본
+	maxTotal = "4"         		//몇개만들건지
+	maxWaitMillis = "5000" 		//최대 5000ms 대기
+/>
+
+
+
+cmd->
+sqlplus system/sys1234 sql접속
+ca3계정생성
+
+dos문 
+.. (상위 폴더)
+.  (현재 폴더)
+cd (changedirectory)
+
+상위 디렉토리로 변경하고자하면
+cd ..
+
+
+
+memberdao
+private DataSource(java.sql.dataSOurce) dataFactory(정말자주사용하는 변수명);
+
+datafactory연동x인데 연동시키는방법
+생성자안
+public emmberdao(){
+try {
+			Context ctx = new InitialContext();
+				
+			dataFactory = (DataSource) ctx.lookup("java:comp/env/jdbc/oracle11g");	//env/뒤는 context안의 name과 동일
+			} catch (NamingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+}
+
+
+
+
+db정보는 servlet이 가져온다.
+
+mvc2 pattern
+
+	   <-
+client      ->					 server
+		[ controller(servlet)           Model(class)          View(jsp)     ]
+
+
+drop table member;
+create table member(
+id varchar2(4) primary key,
+name varchar2(12) not null,
+age number(3) check(age<200)
+);
+insert into member
+values
+('m001', 'kim', 11);
+
+commit;

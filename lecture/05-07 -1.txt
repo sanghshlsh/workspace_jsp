@@ -1,0 +1,108 @@
+DML
+-INSERT
+-SELECT
+-UPDATE
+-DELETE
+
+============================
+DDL
+-CREATE
+-ALTER
+-DROP
+============================
+DCL
+-GRANT
+-REVOKE
+
+TCL(COMMIT,ROLLBACK)
+============================
+
+
+계정 생성
+CREATE USER (계정명) IDENTIFIED BY (패스워드);
+사용
+CONN (계정명)/(패스워드)
+
+유저확인
+SHOW USER
+
+생성한 계정에 권한부여
+GRANT CONNECT, RESOURCE, DBA TO (계정명);
+
+권한 회수
+REVOKE CONNECT FROM (계정명);
+
+권한 확인
+SELECT * FROM DBA_ROLE_PRIVS WHERE GRANTEE = 'CA';
+
+
+계정 비밀번호 변경
+ALTER USER (계정명) IDENTIFIED BY (변경할 비밀번호);
+
+계정 삭제
+DROP USER (계정명);
+============================
+테이블 생성
+CREATE TABLE (테이블명(tbl_테이블명)을 주로사용) (
+변수명 자료형(크기),(구분자)
+ex)
+id VARCHAR2(6),
+name CHAR(21),
+age NUMBER(3),
+address NVARCHAR(7)
+);
+
+테이블 삭제
+DROPT TABLE (테이블명);
+제약조건을 무시하고 삭제하고 싶다면 (테이블명) 뒤 CASCADE CONSTRAINTS 삽입
+
+테이블명 변경
+RENAME (변경전 테이블명) TO (변경후 테이블명);
+
+테이블 수정
+(coloumn 추가)
+ALTER TABLE (테이블명) ADD (추가할 변수명) (자료형)((크기));
+
+column 수정(자료형/크기 변경)
+ALTER TABLE (테이블명) MODIFY (변수명) (자료형)((크기));
+
+column 수정(column명 변경)
+ALTER TABLE (테이블명) RENAME COLUMN (변경전 테이블명) TO (변경후 테이블명);
+
+column삭제
+ALTER TALBE (테이블명) DROP COLUMN (변수명);
+======================================
+
+DML 정보 넣기
+INSERT INTO (테이블명)
+((COLUMN명), (COLUMN명), (COLUMN명))
+VALUES
+((데이터1), (데이터2), (데이터3));
+
+모든 COLUMN을 입력 할 필요 없고 비워도 된다.
+모든 COLUMN의 데이터를 입력한다면 2행 생략가능
+단, 순서는 같게 해야한다.
+
+테이블 데이터 읽기
+SELECT * FROM (테이블명);
+
+해당 COLUMN의 값이 일치하는 다른 COLUMN의데이터 찾기
+SELECT (찾을COLUMN명) FROM (테이블명) WHERE (조건COLOUM) = (조건 데이터);
+
+
+정보 수정
+UPDATE (테이블명)
+SET
+COLUMN명 = 수정 후 데이터,
+COLUMN명 = 수정 후 데이터
+WHERE
+조건 COLUMN명 = 조건 데이터;
+
+
+
+SAVEPOINT (포인트이름);
+COMMIT;
+ROLLBACK;
+ROLLBACK (포인트이름);
+
+

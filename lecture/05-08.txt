@@ -1,0 +1,67 @@
+P.K.
+
+
+
+classpath
+
+C:\Program Files\Java\jre1.8.0_241\lib\ext
+이곳에 java6
+nametab = oracle 11 server->localhost
+
+db->xe
+
+
+
+
+
+
+
+
+
+sudent3 테이블
+레코드
+did 1찾아서
+did값 변경
+did 2 변경 후
+depart 테이블에서
+did값이 1인
+레코드 삭제
+
+
+체크 제약조건 
+데이터를 넣을때 특정 조건을만족해야 입력가능
+check(조건식)
+
+
+
+
+member 테이블에 있는
+모든 레코드를 조회하는데
+id와 name 컬럼 데이터만 가져오시오
+
+모든 컬럼 정보를 다 가져옵니다.
+그런데 AGE에 +1을 해서 가져오세요.
+
+문자열더하기 ||
+별칭 붙이기 원본명 as 별칭(별칭은 ''로 감싸지 않는다.)
+as를 생략해도 가능하다(as 가 있으면 타이핑은 아주조금 불편하지만 가독성이 좋다.)
+
+중복값 생략하고 가져오기
+SELECT DISTINCT 컬럼명 FROM 테이블명
+
+
+4,5,1,3
+정렬
+내림차순 desc 5,4,3,1
+올림차순 asc  1,3,4,5
+order by 컬럼명 오름차순asc/내림차순desc
+default는 asc이므로 오름차순은 생략가능
+
+member테이블의
+모든 레코드를 조회하는데 
+name을 기준으로 오름차순 정렬하라
+
+member테이블의
+모든 레코드를 조회하는데 
+name을 기준으로 내림차순 정렬하라
+만약 name이 같다면 나이를 기준으로 하라

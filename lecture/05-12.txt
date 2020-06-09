@@ -1,0 +1,182 @@
+----[CollectionTest]
+
+
+Generic: 자바 컬렉션 프레임워크 객체에 들어갈 수 있는 객체의 자료형을 규정하는 문법
+
+Generic type을 받을 수 있게 만들기위해 class명뒤에 <T> 기입(ex MainEx-GTest)
+Wrapper class 기본자료형을 객체로 만들기 위해 첫문자를대문자로 사용
+
+autoboxing
+autounboxing
+
+기본자료형 형변환시
+parse method사용
+char 자료형만 charAt사용
+
+비슷한것으로 valueOf가 있지만 이는 객체(instance)로 반환
+
+List 
+Set 
+Map(Collection framework는 아니지만 구조가 비슷해서 같이배운다.)
+이들은 interface 따라서 이들로는 객체를 만들지 않는다.
+		데이터입력	index
+ArrayList	add		0~
+HashSet		add		없다
+HashMap		put		임의의 자료형
+
+ArrayList
+
+ArrayList 주요 함수
+get(int index)
+add(element)
+size()
+set(int index,element)
+indexOf(Object O)
+contains(Object O)
+remove(int idx) -- 삭제를 하고나면 그 인덱스는 한칸식 당겨지며 메꿔짐
+clear()
+
+
+
+
+me1() method는 
+java.util.List로 만들어진
+list라는 변수명을 갖고있다.
+단, 이 list에는 3, 4, 5...등의 정수를 저장할 수 있다.
+
+
+me2() method는 
+java.util.List로 만들어진
+list2라는 변수명을 갖고있다.
+단, 이 list에는 apple 객체만 저장할 수 있다.
+
+me3() method는 
+외부로부터 List의 객체 list3을 넘겨받아서 
+그대로 반환해주는 기능을 갖고있다.
+
+me3 method에 
+hello
+world
+good
+morning
+!!!!
+입력
+그리고 모두 출력하시오
+
+me4() method는
+
+list4객체에
+1,1,2,3,5,8,11을 입력하는 기능을 갖고 있다.
+
+me5() method는
+Apple 객체 를 입력할 수 있다.
+list5에 저장된 요소에 대해서 name 과 price를모두 출력하시오
+
+me6() method는
+Pear 객체를 입력할 수 있고
+list6에 저장된 요소에 대해서 name 과 price를모두 출력하시오
+
+메인메소드에서 test클래스를 이용해서 t1객체를 생성하고 t1이 갖고 있는me6 method호출하라
+
+me7() method는
+set method
+set(index,element)
+list의 index 항목을 element로 변경
+me8() method는
+indexOf()
+me9() method는
+contains()
+me10() method는
+remove()
+me10() method는
+clear()
+
+
+
+----[SetTest]
+
+HashSet
+
+--set
+1.순서가 없다. 선입선출도 후입선출도아닌 랜덤
+->index가 없다.
+2.중복이 없다.
+-> 데이터 중복을 허용하지 않는다.
+->그어떤 경우에도 중복은 허용치않는다.
+
+
+
+iterator();
+
+Set method
+add(e)
+size()
+remove(Object O)
+clear()
+iterator()
+
+
+me() 1~3 잘볼것
+Iterator<e> A= B.iterator();
+while(A.hasNext()){
+e C = A.next();
+sout (C);
+}
+
+== 위아래 동일하나 아래는 최근에나와 실제 업무에서는 안쓸 가능성이 높아 위를 사용하라
+
+ArrayList<e> A = new ArrayList<e>(B);
+sout( A);
+
+ex)위
+		Iterator<Apple> it = set3.iterator();
+		ArrayList<Apple> list3 = new ArrayList<Apple>();			!!
+		while (it.hasNext()) {
+			Apple apple =  it.next();
+			System.out.println("name: " +"\t"+ apple.getName());
+			System.out.println("price: "+"\t" + apple.getPrive());
+			list3.add(apple);						!!
+		}
+
+		!!는 밖에서 사용하기위해 생성한것
+
+ex)아래
+		ArrayList<String> list2 = new ArrayList<String>(set2);
+		System.out.println(list2);
+
+
+----[MapTest]
+
+HashMap
+
+K=key
+V=value
+Map<K,V>
+Key는 중복되면 안된다.
+key가 중복되는 상황이나오면 value가 덮어쓰인다
+
+put(key,value)
+size()
+keySet()
+remove(key)
+clear()
+
+HashMap은 직접적으로 반복문을 돌릴 수 없는구조인데
+다음과 같은 방법으로 돌릴 수 있다.
+	Set<keyType> setname = mapname.keySet(); //keySet()을통해 key가 들어있는 Set을 만들고
+	Iterator<keyType> A = set.iterator();    //iterator()를 통해 while문을 돌려 set을 사용
+	while(A.hasNext()){
+		Keytype B = A.next();
+		ValueType C = mapname.get(B);
+		sout ( C );
+	}
+
+
+ex)
+		Set<String> set = map5.keySet();
+		Iterator<String> it = set.iterator();
+		while (it.hasNext()) {
+			String key = it.next();
+			Apple value = map5.get(key);
+			System.out.println(value.getName());
+			System.out.println(value.getprice());

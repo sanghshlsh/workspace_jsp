@@ -1,0 +1,174 @@
+jsp/servlet 학습(서버프로그래밍)
+jsp 	- 기본	html	부가	java	// 화면양식의 느낌이크다.
+servlet - 기본	java	기본	html
+
+
+1.tomcat.apache.org 접속
+2. 좌측메뉴 - download - tomcat7 클릭
+3. 우측화면 - 화면 수직중간부분	- binary distributions - core 
+- 32-bit/64-bit windows service installer(pgp, sha512) 클릭
+
+
+tomcat7 - 7.0.104 - 32-bit/64-bit Windows Service Installer
+
+tomcat설치
+allcheck			- 0 ~ 65535(2^16-1) 포트번호들
+
+				- 0~1023 (예약되어있는 포트(system port)) 사용불가
+				- 1024~65535 사용하고 있지 않다면 사용가능
+
+server shutdown port		-
+http/1.1 connerctor port	- 8080port 는 oracleport와 동일 떄문에 바꿔준다.
+				- 8089로 바꾼다.
+windows service name		-
+create shortcuts for all users	- 
+tomcat admin login		- user name	: ca
+				- password  	: ca
+				- roles
+
+jre installed path		- jre class path(ex.C:\Program Files\Java\jre1.8.0_241)
+
+destination folder		- C:\Tomcat 7.0
+
+run apache7 풀고 finish
+
+eclipse file -switch workspace - other - workspace_jsp
+
+perspective - java EE
+window - perspective - open perspective - javaEE open
+
+
+tomcat 설치 : 서버사용위해
+- Container : HTML, CSS, JS, IMG, MP4... (이들은 Component 이들을관리해주는것이 Container)
+- 서버기능
+
+localhost - 내 pc
+localhost:8089 접속불가
+C:\Tomcat 7.0\bin\ tomcat7w 실행 start
+localhost:8089 접속가능
+
+
+
+eclipse - window -  preferencfes 
+- generel - workspace - text file encoding - other utf-8 apply
+
+-web 	- css files 	-utf-8
+	- html files 	-utf-8
+	- jsp files	-utf-8
+
+
+생성 web-dynamic web project를 통해 작업
+
+서버생성
+하단markers/properties/servers/datasourceexplorer/snippets
+->servers
+create new server
+apache->tomcat7.0 ->next-> directory -> tomcat7.0 path등록 finish
+
+tomcat v7.0 server at localhost 클릭후 실행아이콘 클릭 
+에러시
+tomcat v7.0 server at localhost 더블클릭 overview/modules 탭 중 
+overview -> ports에 tomcat admin port를 8009로 설정 ctrl + shif + s를 통해 설정 저장
+다시 실행아이콘을 눌러 서버 실행이 되는지 확인 후 중지
+
+404 error - 서버에 어떤 요청을 했을떄 서버는 돌아가지만 해당요청을 구현하지 않았다면 발생
+
+
+dynamic web project 생성시 next마지막에 generate web.xml deployment descriptor 클릭을하고 생성
+
+web.xml		=	배포서술자	=	deployment descriptor	=	d.d.	=	환경설젇파일
+모두 같은말
+
+
+Project = Context(servlet Context)
+
+
+java resources -> src폴더
+-class/interface
+-servlet
+
+webContent폴더(componet들이 이폴더에 들어간다./폴더를 생성하여(css/html/img/js/jsp등의 폴더생성하여 그안에 해당파일을 넣는것이 일반적)
+(외부에서 접근가능)
+-HTML,CSS,JS,JSP,IMG,MP4
+
+/web-inf폴더(외부에서 접근이 불가능한 폴더)(해당프로젝트에서만 기능이 실행된다. tomcat폴더에 lib를 넣는다면 모든 프로젝트에 적용)
+-lib
+-classes폴더
+-web.xml
+
+
+디자인패턴
+Command Pattern
+MVC1 Pattern : 간단한/ 취미로 하는 프로젝트, 돈 받고 하는 프로젝트는 아님
+MVC2 Pattern : 복잡한 프로젝트
+
+
+기본브라우저를 window web browser - crome 선택
+
+
+
+
+project명 GoodMorning
+good.jsp생성
+<h1> 안녕하세요</h1>
+입력하기 실행까지
+
+generate web.xml~안했을때
+project우클릭 java EE tools -> genenrate deployment descriptor stub
+
+
+
+
+프로젝트명 Goodmonring
+com.naver 패키지에
+command인터페이스 작성하라
+
+js 폴더에 hello js 파일을 생성하시오
+
+kr.co.ca 패키지에
+MyServlet이라는 servlet파일을 만들어주세요
+servlet안의 doGet,doPost method는 외워둬라
+
+
+form tag의 method가 post일때만 post방식(메세지에 데이터를 넣어서보내는)이고 나머지는 모두get방식(주소에 데이터를 넣어서 보내는 방식)
+get방식실행 doGet method 실행
+post방식실행 doPost method 실행
+
+
+project HiWorld
+web.xml을 이용한 맵핑방법
+web.xml -> design/source tap중 source tap
+/welcome-file-list과 /web-app
+사이에 작성
+servlet
+servlet-name	-아래 mapping의 servlet name과 동일 이 이름으로 url주소와 실행시킬 servlet을 찾는다.
+sevlet-class 	servlet명(중복시 패키지명까지 기입)
+/servlet
+
+servlet-mapping
+servlet-name	-위 sevl  et name과 동일
+url-pattern	-url 주소(/뒤에 url주소를 입력하는 디렉토리 형식과 *.뒤에 확장자형으로 입력하는 확장자형패턴 두가지 패턴 존재)
+/servlet-mapping
+
+
+
+서블릿네임:cmys1
+url pattern: cms1
+작성하라
+
+
+
+project Test
+
+dynamic web project 생성시 target runtime이 none일떄
+apache tomcat v7.0~이 없어 project우클릭 properties를 들어가 targeted runtimes tap의 apache tomcat v7.0을 체크 적용하면 해결된다.
+
+jsp파일에 <% %> 사이에 java코드를 사용하여 동적인 프로그래밍을 할 수있다. dynamic web programing
+
+
+tomcat에서는 한글을 지원하지 않기때문에 servlet의 doget dopost method에서 한글을 출력하려면
+response.setContentType("text/html;charset = utf-8");
+코드를 작성하고.
+응답을 하기 위한 response객체의 getwiter()를 이용 printWriter객체의 out변수를 이용 출력한다.
+
+--Project test의 my/your servlet 참고

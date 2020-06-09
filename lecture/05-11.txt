@@ -1,0 +1,110 @@
+dbtest - test4~
+where절
+>
+>=
+<
+<=
+=
+!=
+
+와일드카드
+조회하고자 하는 항목의 이름의 일부로 조회하고자 할때
+_(언더바) : 한글자
+ex) '_xx_'  xx앞뒤로 한글자가 더 있는 이름의 항목을 조회
+% : 글자 수 무관(0자포함)
+ex) '%xx%' xx앞뒤로 몇글자든 있는 이름의 항목을 조회 없어도 된다. 'xx'도 조회됨
+단 이때는 등호= 대신 like를 사용한다.
+
+
+null값이 있는 항목이나 null값이 아닌 항목을 조회할 떄
+is, is not을 사용한다.
+ex) null값을 검색시
+select * from table명 where column명 is null
+select * from table명 where column명 is not null
+
+
+
+통계함수(집계함수) - 결과는 relation(table)로 출력된다.
+select count(*or column명(primary key)) from table명
+
+primary key가 적용된 column이 아닌 다른 column을 넣으면 null값이 있을 시 그것을 제외하고 계산한다.
+그렇기에 count 함수를 사용할 시 column명을 사용할 시 primary key를 사용한다.
+
+count()
+sum()
+avg()
+max()
+min()
+
+
+group by
+group을 만들고 이를 이용할 때 그룹이 아닌 다른 column으로 조회하지 못한다.
+select groupcolumn명 , 집계함수() from table명 group by groupcolumn명
+
+having절
+group에 대한 조건을 지정할 떄 사용
+
+조건절에는 논리연산자 and 와 or도 들어갈 수 있다. 단 && || 아닌 and or
+
+
+a between b
+a>= and <= b
+
+
+in
+select column명 from  table명 where 조건절 column명 = a or ~
+이럴때 where 조건절을 column명 in (a,b,c,~)사용 
+비교할 대상이 두개 이상이라면 ()로 묶어 사용한다.
+
+rownum 별칭을 붙여 사용(가상의 번호라 따로 명칭이없다)
+
+sub query
+select dname from (select dname, count(*) from test8 group by dname)
+	메인쿼리		서브쿼리
+	
+Join
+-EQUI JOIN
+EX)	select m.id, d.did, d.dname, m.name
+	from member m, dep d
+	where m.did = d.did
+
+-INNER JOIN
+EX)	select m.id, d.did, d.dname, m.name
+	from member m inner join dep d
+	on m.did = d.did
+	inner join hometown h
+	on M.hid = h.hid
+-NATURAL JOIN
+EX) 	select * from member m natural join dep d
+	natural join homtown h
+EX)COLUMN명이 다를 떄
+	select m.id, d.did, m.name, d.dname
+	from member m join dep d
+	on (m.did = d.did)
+
+
+
+
+EX)크기가 다를 때
+select m.id , d.did, m.name, d.dname
+from member m join dep d
+using (did)
+
+
+
+
+
+test5
+--id 정보가 없는 사람을 조회하려고 합니다
+--name 정보가 있는 사람을 조회하려고합니다.
+test8
+--사장이 사원들의 인건비 총합을 알고 싶습니다.
+--dname별로 그룹을 짓고 각그룹에 몇명이 있는지 조회하시오
+--최고 연봉이 5000 이상인 사원이 있는 부서 조회
+--최고 연봉이 5000 이상의 사원이 있는 hometown 조회
+--사원 수가 2명 이상이 있는 hometown 조회
+--hometown이 경기 또는 서울
+--hometown이 경기 또는 서울 또는 대구 또는 대전
+--최고연봉이 5000 이상인 부서의 모든 사원들의 정보를 조회하시오.
+select * from where dname in (select dname from x group by dname having max(salary)>=5000)
+--최고 연봉이 5000 이상인 부서의 최고 연봉을 받고 있는 사원의 정보를 조회하시오

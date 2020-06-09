@@ -1,0 +1,119 @@
+컨텍스트명을 대문자 ROOT로하면 context명이 안나온다
+
+Project Test060301
+
+NewFile.jsp jstl + el foreach문
+	<c:forEach items="${}" var="">
+
+NewFile1.jsp selectcommand상황 list출력
+
+NewFile2.jsp Frontcontroller 상황
+frontcontroller 간결하게 - 동적 객체생성 map 이용 검색
+map의 el 문 사용법 ${dto.key}/${dto.value}
+
+newfile3
+paging을위한 foreach문
+jstl의 <c:foreach begin="" end="" var="" step="" varstatus="">
+varstatus의 method index count
+
+newfile4
+corelibrary의 if문 단순if문만 사용가능 (if else를 사용하고싶으면 c:if하나더사용
+<c:if test="${조건식}">
+corelibrary의 choose when otherwise
+
+<c:choose>
+	<c:when test="${}"></c:when>
+	<c:when test="${}"></c:when>
+	<c:otherwise></c:otherwise>
+</c:choose>
+
+core library - foreach/choose-when-otherwise
+newfile5
+corelibrary의 set
+변수 선언시 사용 - el에서 호출가능
+<c:set var="page" value="pageContext" scope="page"></c:set>
+${page} -> pageContext 출력
+--mvc1 pattern이 아니고서는 정말 사용할 일이 거의 없다.
+core library의 out
+<c:out value="${page }"></c:out>
+위에서 선언한 page의 value인 pageContext 출력
+이또한 el과 expression tag가 있으므로 사용할일이 거의 없다.
+=====================================================================================
+
+perspective java EE-> java
+
+Project IOTest (dynamnic web x java o)
+
+
+Stream
+
+
+File class
+	kr.co.ca.MainEx에서 학습
+-file,folder(directory)를 관리하는 기능이 있는 클래스
+-file을 삭제할 수 있게 함(생성x only 삭제)
+-folder(directory)를 생성/삭제 할수 있게 함
+
+File.f1 = new File("경로");
+경로상의 파일/폴더를 가르키는 객체 f1
+
+-경로 구분자 File.separator	- 운영체계에 맞게 설정됨(리눅스/윈도우 다르다.) ex) C://AAA//BBB//test.txt C:\\AAA\\BBB\\test.txt
+	file객체.exists();
+		.mkdir();
+		.delete();
+		.renameTo(file dest);
+mkdir/delete매우중요
+=====================================================================================
+Project IOTest
+kr.co.ca
+MainEx
+Test
+
+Stream
+IO(input Output)
+
+프로그래밍에서 기준은 언제나 왼쪽
+
+				(Stream)
+			  Reader
+			  InputStream
+java program		 <--------데이터-----			장치
+			 -------데이터------>		(메모리/드라이브/프린터기/파일/
+			  OutputStream			네트워크(서버)/타PC 등등....)
+			  Writer
+Reader와 InputStream은 동일한것이 아니고
+Writer와 OutputStream 또한 동일한것이 아니다.
+
+Stream 객체를만들때 해당 Stream은 장치에서 자바로 데이터로 보내주는 기능만있거나
+그반대의 기능 한가지만 존재한다. 
+입력/출력스트림 각각 따로 존재.
+
+Stream의 종류	/기준에 따라 구분
+1. 전송되는 데이터의 크기에 따른 분류
+	-byte stream 		: 1byte 전송 :stream이름이 ~Stream-->byte stream(ex Input/OUtput Stream/DataInputStream)
+	-문자(char) stream	: 2byte 전송 :stream이름이 ~er	  -->char Stream(ex Reader/Writer/FileReader/FileWriter/InputStreamReader)
+	/문자스트림은 멀티미디어(영상/사진)파일등은 전송못한다.txt file또한 byte steam이 더 많이 사용된다.(기존의 장비들이 대부분 byte stream을 지원하므로)
+
+	
+2. 특별한 기능의 존재 여부에 따른 분류
+(<-> 장치와 직접 연결이 되는지 여부에 따른 분류)//특별한 기능이 있다면 장치와 직접연결이 안된다.//정확히 알려면 api를 봐야 한다.
+	- node Stream	: FileInputStream/FileOutputStream/
+	특별기능x 장치직접연결o
+	- filter stream	: BufferedInputStream
+	특별기능o 장치직접연결x
+
+
+===================================================================================
+Test class me1() method
+
+		<--inputStream-----		장치1(test.jpg)
+java program					
+		---outputStream--->		장치2(copy_test.jpg)
+
+
+===================================================================================
+Test class me2() method
+배열로 이동
+byte[]로 받아온 것을 int leng의로 받은 이유는 
+in.read() method로 받은 int형 데이터의 수가 1개씩인데
+in.read(arr) method로 위의 데이터를 몇개를 받았나를 반환

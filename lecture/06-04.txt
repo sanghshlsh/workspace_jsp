@@ -1,0 +1,90 @@
+Stream
+
+BufferdInputStream
+BufferdOutputStream
+-속도향상의 기능
+-filter stream
+
+
+바이트 스트림의 부모스트림	: InputStream/OutputStream
+
+문자 스트림의 부모트르팀	: Reader/Writer
+
+BufferedReader
+BufferedWriter
+-속도향상기능이 있지만
+-node stream
+
+
+
+======================================================================================================
+http://servlets.com/
+
+좌측 사이드바
+com.oreilly.servlet
+download
+cos-20.08.zip
+
+file upload를 도와주는 기능을 갖고 있는 jar파일
+
+압축 파일 내 lib폴더의 cos.jar를 복사
+tomcat7.0폴더의 lib폴더에 붙여넣기
+
+======================================================================================================
+
+
+Project Test060401
+
+file upload양식 
+
+
+
+
+
+
+----------------------------------------------------------------------------------------
+
+download
+
+MIME type : 첨부된 파일을 문자형태로 변환해주는 포멧
+ Multipurpose Internet Mail Extensions
+
+
+tring fileName = request.getParameter("fileName");
+		
+		String uploadPath = "C:"+File.separator+"upload";
+		//c에 업로드한경우는 위와 같지만 실제로는 projct내부 webcontent폴더에 폴더를 만들어서 하므로 아래 코드를 자주 사용함
+		//String uploadPath = request.getServletContext().getRealPath("img");
+		//webcontent폴더에 만든 img폴더의 절대좌표 추출
+		
+		
+		String filePath = uploadPath+File.separator+fileName;
+		File f = new File(filePath);//알아낸 파일경로를 통해 파일객체 생성
+		
+		InputStream in = null;
+		//outputstream은 시스템에서  제공하는 
+		try {
+			in = new FileInputStream(f);//stream 연결
+
+
+-----------업로드를 위한 환경설정
+
+
+
+
+
+String sMimeType = getServletContext().getMimeType(filePath);
+			if(sMimeType == null){
+				sMimeType = "application/octet-stream";//mimetype이 지정되지 않았을때 그냥 다운로드 받으라는 의미
+			}
+			response.setContentType(sMimeType);
+			//mimetype설정완료
+			
+			//브라우져 인코딩방식에 맞춰 설정
+			String encoding = new String(fileName.getBytes("utf-8"),"8859_1");
+			//파일네임이 꺠지지 않게 하기위해 8859_1 형태의 인코딩타입으로 변경
+			//8859_1 브라우져 기본인코딩형태
+			
+			response.setHeader("Content-Disposition", "attachment;filename="+encoding);
+
+다운로드를위한 환경설정

@@ -1,0 +1,11 @@
+package com.naver;
+
+public class LoginBean {
+	private String id;
+	private String pw;
+	
+	public LoginBean() {
+		// TODO Auto-generated constructor stub
+	}
+	
+}

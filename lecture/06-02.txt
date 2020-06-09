@@ -1,0 +1,83 @@
+Project Test060201
+==================================================================================
+6.Action Tag
+
+7.내장객체(request, response, out, application, session, config,
+page, pageContext, exception)
+
+8.영역객체(request-그외, session-로그인, application-접속자수, pageContext-el사용)
+
+9.Expression Language
+
+10.Jsp Standard Tag Libaray
+
+
+==================================================================================
+6.Action Tag		<jsp: ></jps: >(넘겨주는데이터 있을 떄) 
+		     or <jsp: /> (넘겨주는데이터 없을때)
+include action tag
+	<jsp:include page=""></jsp:include>
+	-servlet이나 class가 생성되어있다. 이를 실행 이 결과값을 받아온다.
+이또한 받아올페이지에는 html 구조가 삭제되어 있어야 한다.
+C:\workspace_jsp\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\work\Catalina\localhost\Project명\org\apache\jsp 에서 확인가능
+
+넘겨주는 데이터가 있을 때는 <jsp: param />같은 코드를 사용한다.
+
+forward action tag	<jsp:forward page="" /> ></jsp: > 두 형태 모두 사용
+	dispatcher 방식으로만 forwarding된다.
+
+usesBean,setproperty,getproperty acion tag --이용 클래스생성--> javabean
+(mvc2 pattern 에서는 큰 의미는 없고 mvc1에서 간단한 프로젝트에서 의미가 있다.)
+객체 = bean = entity = instance = object
+(조금씩은 다른의미이 객체이지만 대략적으로는 같은의미)
+
+useBean action tag
+<jsp:useBean id="login" class="com.naver.LoginBean"/> 
+객체명이 login인 LoginBean 객체 생성  == LoginBean login = new LoginBean();
+
+setProperty action tag
+<jsp:setProperty property="id" name="login" value="m003"/>
+login 객체의 id의 속성을 m003 이라는 값으로 설정
+== login.setId("m003");
+//EL지원
+m003이라는 value값은 지금처럼 정적으로 입력하는것이아닌 다른곳에서 동적으로 입력가능->loginTest.jsp->NewFile7.jsp value->param변경해서 사용(param의 value는 받는것의 name)
+
+getProperty action tag - 거의사용x (expression tag expression language가있어서)
+<jsp:getProperty property="pw" name="login"/>
+== login.getPw();
+
+
+세가지 통일 login.jsp-NewFile8.jsp
+javaBean 의 멤버변수와 parameter name이 전부 동일하다면 setproperty를한번만사용해서 데이터를 전부 받을 수있다.
+<jsp:setProperty property="*" name="login"/> * 을사용
+==================================================================================
+7.내장객체 (request, response, session, application, page, pageContexct) 6+2+1 (exception - 에러페이지에서만 사용가능) config - mvc1에서만 주로 사용 out - el을 사용하므로 거의 사장
+-지역변수이기때문에 declaration tag에서 사용불가
+NewFile9.jsp	request
+NewFile10.jsp	response
+NewFile11.jsp	application
+NewFile12.jsp	pageContext
+NewFile13.jsp	config
+NewFile14.jsp	exception	-test11.jsp
+NewFile15.jsp	session
+		page -> 자바의 this 키워드와 매우 유사(현재페이지에대한정보를가진다)
+
+==================================================================================
+Project Test060202	
+9. Expression Language		${}
+jstl과 사용하는것이 더욱 효과적
+문자열 넣을수 있다.
+산술/비교/논리연산 가능
+삼항연산 가능
+null에대해 관대하다.(null point exception이 발생할 상황에서도 넘어간다.)
+null확인 true/false 리턴-> ${empty x} ${!empty x} == ${not empty x}
+영역객체에 데이터 바인딩이 되어 있을 떄 그 바인딩된 데이터의 타입이 list or dto 등의 객체일때
+${dto.id} ${dto["id"]} 동일
+
+==================================================================================
+8.영역객체(데이터를 저장 할 수 있는 기능을 갖고 있는 객체)
+newfile2~4 영역개체 scope
+pageContext(page라부른다.) : 현재 페이지에서만 데이터 유지(scpoe 현재페이지) : el binding용
+request			   : 같은 요청/			: 나머지
+session			   : 시간&브라우저(scpoe)	: login
+application		   : context(Project)		: 방문자수

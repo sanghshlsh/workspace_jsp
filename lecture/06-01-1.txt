@@ -1,0 +1,126 @@
+Filter
+===========================================================================================
+Filter Class
+
+filter
+client			filter chain(filter여러개가능)		server
+	-------->filter1---------->filter2------------------>
+	FQ1(request1)	FQ2(request1(변형))		FQ3(reqeuset1(변형-변형))
+
+	<--------	<---------	<--------------------	
+	FS1(response1)	FS2(response1(변형)		FS3(response1(변형-변형)
+
+적용순서 fq1-fq2-fq3-fs3-fs2-fs1
+===========================================================================================
+
+filter class의 구조
+servlet과 구조 동일 // web.xml에 매핑하는것도 동일
+
+webfilter 어노테이션에 매핑을 한다면 filter chain 적용 불가.
+모든 주소에 적용받게 하려면 "/*" 을 이용
+
+Filter chaining의 순서
+filter chaining 순서는 web.xml의 filter-mapping tag 순서를 따른다.
+
+===========================================================================================
+
+doFilter method
+
+chain.doFIlter method를 기준으로 위에 작성된것이 request시 호출되는 코드
+아래 작성된것이 response시 호출되는 코드
+
+cf) 한글 인코딩은 모두 doFilter 위 즉 reqeust시 적용되게 해야 의미가 있다.
+
+만약 response시 적용되게 한다면 그것은 servlet에서 코딩 마지막줄에 한글 인코딩을 한것과 동일
+
+===========================================================================================
+
+Project Test060101
+1.주석태그	<%-- --%>
+2.지시어태그(Directive Tag)(환경설정 태그)	<%@ %>
+3.Scriptlet 태그	<% %>
+4.Declaration 태그(선언태그)	<%! %>
+5.Expression 태그	<%= %>
+6.Action 태그
+7.내장객체	(request, response, out, application, session,config
+page, pageContext, exception(에러페이지로 설정된 jsp에서만 사용 가능))
+8.영역객체(pageContext(el에서사용), request, session, application)
+9.Expression language
+10.Jsp Standard Tag Libaray
+
+===========================================================================================
+1.주석태그 
+	html<!-- -->
+	java // /* */ 
+	jsp <%-- --%>
+jsp의 주석태그는 페이지소스에 노출되지 않는다.
+
+===========================================================================================
+2.지시어태그
+	<%@ %> 3가지 종류 존재
+	-1 page directive tage	<%@ page %>
+		-로그인관련 session설정				session="false"
+		-예외 처리 페이지 설정할때 errorPage 설정	errorPage="xxxx.jsp"
+		-페이지를 에러페이지로 선언할때 isErrorPage 설정isErrorPage="true"
+		-import시
+
+	-2 Include directive tag Vs Include Action Tag <%@ include file="part.jsp" %>
+
+		-include directive tag-static include 정적인클루드
+	<%@ include file="part.jsp" %>
+	part.jsp에 있는 page directive tag를 제외한 모든 내용이 입력된다.
+	주로 footer를 표기할 떄 사용함 ex) 사이트 가장아래 사이트정보관련내용
+
+		-include action tag-dynamic include 동적인클루드
+	<jsp:include page="header.jsp"/>
+	headr가 새로운 servlet이 작성되어 실행되고 그 결과가 입력된다.
+
+	-3 taglib directive tag	<%@ taglib uri="" prefix="" %>
+		core/fmt/functions - 주로 세가지 사용
+	선언
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+   	<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+    	<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+	호출
+	<c:out value="hello"></c:out>
+	-다음과동일
+	${"hello"}
+	<%=hello%>
+	<% 
+	out.print("hello");
+	%>
+
+	templates등록방법
+	windows-preferences-web-jsp files-editor-templates-jsp with html 5 markup 더블클릭-
+	page directive tag 아래붙여넣기
+
+===========================================================================================
+3.Scriptlet 태그	<% %>
+	method/constructor scpoe유사
+	
+	내장객체는 Scriptlet tag 내부에서만 사용가능
+	내부에 Scriptlet Tag /method /Constructor 생성 불가
+	method 호출 가능
+	변수 선언(지역변수)/대입 가능
+	멤버 변수 선언가능
+	지역변수와 멤버변수 모두 선언가능하다면 반드시 지역변수를 사용하라
+	scriptlet tag와 declaration tag모두에 선언가능하다면 반드시 scriptlet tag에 선언
+	Scriptlet tag가 나누어져 다른위치에 있어도 하나의 jsp내부에 있다면 이어져있다.
+	(이를활용 scriptlet tag와 html 코드를 동시활용가능)
+	ex) <%int a = 5; for(int i = 0 ; i < a ; i++){ %> hello : <%= i %> <br><% } %>
+ 
+===========================================================================================
+4.Declaration 태그(선언태그) <%! %>
+	filed scope유사
+	대입 불가
+	method 호출 불가
+
+===========================================================================================
+5.Expression 태그	<%= %>
+	대부분의 상황에서 EL이 유리하지만
+	EL은 Scriptlet Tag에서 선언된 변수를 인식하지 못한다.
+	그래서 그 상황에서 Expression Tag를 사용
+	
+	그상황에서 EL을 인식시키려면 Scriptlet Tag에서 선언된 변수를 	영역객체(ex.pagaContext)에 binding해서 사용
+
+===========================================================================================

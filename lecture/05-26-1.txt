@@ -1,0 +1,144 @@
+Project Test052601 - MyServlet2
+
+클라이언트	-------->	사용자
+		 데이터
+
+파라미터 : 파라미터 네임 = 파라미터 밸류
+형식으로 구성
+ex)http://localhost:8089/Test052601/ms1?id=tt&pw=123
+parameter name = id/pw
+parameter value = tt/123
+
+데이터를 받기 위해서는
+request를 이용해야 하는데
+resquest.getParameter("parameter name");을통해 데이터를 받는다
+이때 모든데이터타입은 String타입이다.
+그렇기 떄문에 int형으로 받으려면 wrapper클래스를 통한 형변환을 해주어야한다./Interger.parseInt(or valueof)
+
+그대로 끝낸다면 500에러가 뜰 수 있는데
+이는 int형을 변환하려한 string type의 데이터가 null값을 가지게 된다면 발생한다.
+이를 해결하려면 if문으로 감싸 null이 아닐때만 실행하게 하고 초기값을 선언하면 해결된다.
+
+클라이언트 -> 서버 데이터이동을 위해서는 
+jsp파일에서 input데이터를 개별적 name을 설정해 준 후 form 태그로 감싸 
+보내고자하는 방식(post/get)을 설정 action을 통해 보내고자하는 주소를 적용한 뒤 보내준다.
+input의 name이 request.getParameter("parameter name")이곳의 parameter name이 된다.
+ex)
+<form action="ms2" method="post">
+	ID: <input name="id"><br>
+	PW: <input name="pw"><br>
+	<input type="submit" value="로그인">
+</form>
+url mapping값이 ms2인곳으로 post method를 통해 parameter name이 id/pw인 input값들을 보낸다.
+
+클라이언트		--------->		서버
+			데이터전송
+
+영문데이터전송 문제x
+한글데이터전송 문제o
+
+response.setContentType--> 서버->클라이언트 데이터전송 과정 인코딩이기때문에 관련이 없다.
+
+해결방안
+1.
+post method
+request.SetCharacterEncoding("utf-8"); 을 통한 인코딩
+
+2.
+get method
+2-1.
+servers.xml 수정을 통한 인코딩
+Servers -> tomcat~ -> servers.xml
+65번line
+ <Connector connectionTimeout="20000" port="8089" protocol="HTTP/1.1" redirectPort="8443"/>
+이곳에
+URIEncoding="utf-8" 를 추가하여 인코딩해준다.
+<Connector URIEncoding="utf-8" connectionTimeout="20000" port="8089" protocol="HTTP/1.1" redirectPort="8443"/>
+이는 servers를 수정하기떄문에 모든 프로젝트의 get method 인코딩이 해결된다.
+
+
+
+2-2.
+
+
+
+
+
+Project MMS1
+
+CRUD작업
+
+
+forwarding
+1.dispatcher방식	-> 기존 주소창의 주소가 바뀌지 않는다.
+
+RequestDispatcher dis = request.getRequestDispactcher("path");
+dis.forward(request,response);
+
+
+2.redirect방식		-> 기존 주소창의 주소가 바뀐다.
+response.sendRedirect("select");
+
+	출처: https://all-record.tistory.com/104 [세상의 모든 기록]
+JNDI(Java Naming Directory Interface) 기술
+	-JNDI의 정의를 보면 디렉터리 서비스에서 제공하는 데이터 및 객체를 발견하고 참고(lookup)하기 
+	위한 자바 API라고 되어있다. 쉽게 말하면 외부에 있는 객체를 가져오기 위한 기술이다. 	
+	Tomcat와 같은 WAS를 보면 특정 폴더에 필요한 데이터 소스(라이브러리)가 있는데 
+	그것을 우리가 사용하기 위해 JNDI를 이용해서 가져오는 것이다.
+		
+Connection Pool
+	DBCP(DataBase Connection Pool)
+	-데이터베이스와 연결된 커넥션을 미리 만들어서 저장해두고 있다가 필요할 때 
+	저장된 공간(pool)에서 가져다 쓰고 반환하는 기법을 말한다. 커넥션 풀을 이용하면 
+	커넥션을 미리 만들어두고 사용하기 때문에 매번 사용자가 요청할 경우 드라이버를 로드하고,
+	 커넥션 객체를 생성해 연결하고 종료하는 비효율적인 작업을 하지 않아도 된다.  
+	즉 데이터베이스의 부하를 줄일 수 있고 자원을 효율적으로 관리할 수 있다.
+		
+JNDI DBCP 전체적 구성
+	①. 사용자가 요청을 한다.
+	②. 요청은 Control(Servlet)을 거쳐 Molel(class)로 전달된다.
+	③. Molel로 넘어간 요청은 JNDI에 등록된 데이터베이스 객체(Type:DataSource)를 검색한다.
+	④. JNDI를 통해 찾은 객체로부터 커넥션을 획득한다.
+	⑤. 데이터베이스 작업이 끝난 후 획득한 커넥션을 반납한다.
+
+
+
+Connection Pool 작업(연동)
+servers -> tomcat -> context.xml 맨아래 </context> 위에 작성(Servers에서 작업했기에 모든 프로젝트에서 적용)
+
+<Resource
+	name = "jdbc/oracle11g"	//이 이름이 보편적으로 사용된다.
+	auth = "Container"	// tomcat
+	type = "javax.sql.DataSource	
+	driverClass = "oracle.jdbc.driver.OracleDriver"
+	url = "jdbc:oracle:thin:@localhost:1521:xe"
+	username = "ca3"
+	password = "ca3"
+--------기본구조
+	maxTotal = "4" 		// 최대 사용할 connnection 갯수	4개
+	maxWaitMillis = "5000"	// 최대 대기시간 5000ms
+/>
+
+
+mvc2 pattern
+
+	<-					server
+client	->	[controller(Servlet)		model(class)		view(jsp)]
+
+	
+db정보는 servlet이 가져온다.
+
+
+MMS 설계하기
+
+기존과 다른점
+DTO X
+DAO drivermanager를 통해 driver접속x
+대신
+DataSource 타입의 변수 dataFactory를 초기 컨텍스트를 선언하며  정의하고
+이를 통해 driver접속(dbcp)
+
+xxservlet(controller)을 통해 xxcommand class(model)에 접속 dao의 method를 사용  db활용
+이 정보를 jsp를 통해 보여준다.
+
+

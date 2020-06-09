@@ -1,0 +1,138 @@
+05-27~28
+Project Test052701
+
+forwarding
+-dispatcher	request.getRequestDispatcher("path name").forward(request.resonse);
+-redirect	response.sendRedirect("pathname");
+
+dispatcher	forward request가 있을때 서버 내부에서 해결하여 response 리턴
+		따라서 request와 response는 하나씩 존재//request scpoe유지
+		request가 하나이기 때문에 url 주소 변동 없다.
+		get 방식 -> get 방식 유지
+		post방식 -> post방식 유지
+		일반적으로 forwarding이라고 하면 dispatcher를 의미한다.
+
+redirect	forward request가 있을 때 서버 내부에서 자신에 대한 처리를 행한 후
+		다시 request보내라고 response를 보낸다.
+		마지막으로 받은 request에 의해 url 주소 변동.
+		request와 response는 forwarding 수만큼 증가(최소 2개)
+		get 방식-> get 방식 유지
+		post방식-> get 방식 변경
+
+
+=================================================================================================================================
+scope		(https://victorydntmd.tistory.com/155)
+
+객체		scope			용도
+session		동일브라우저/일정시간	로그인 관련
+application				방문자수 관련
+request		하나의 request내	그외
+pageContext
+
+=================================================================================================================================
+reqeuest의 용도 6가지
+1. 한글 지원
+	request.setCharacterEncoding("utf-8);(post방식을 위한 한글 인코딩/get방식은 servers.xml에 URIEncoding을 통하여)
+2.clinet가 보내준 데이터 받는 기능
+	String val = request.getParameter("name");
+	String[] val = request.getParametervalues("name");
+3.Data binding
+	request.setAttribute("name",Object);	//모든타입의 데이터 저장 가능
+			      key    value
+4.binding 된 데이터 활용
+	datatype val = (datatype) request.getAttribute("name");
+	getAttribute는 Object를 반환하기에 Casting이 필요하다.
+	request에 저장된 데이터를 활용하기에 redirect사용불가
+5. dispatcher
+6. Servlet Path확인
+	String uri = request.getRequestURI();		ex) http://localhost:8089/Test052701/insert.do	->	/Test052701/*.do
+	String ctxp = request.getContextPath();		ex) http://localhost:8089/Test052701/insert.do	->	/Test052701
+	String sp = uri.substring(ctxp.length);
+	//다음과 같은 방법도 있지만 아직 실무에서 잘 사용하지 않으니 있다는것만 생각
+	String sp = request.getServletPath();
+
+=================================================================================================================================
+application
+
+Project Test052702
+
+초기화 파라미터 = 특정 서블릿에서만 사용 가능한 파라미터
+web.xml에  매핑시 만든 <servlet>안에 <init-param>을 작성하여 선언
+호출시는 getInitParameter("name");을 통해 호출
+
+컨텍스트 파라미터/ 프로젝트 파라미터  = 프로젝트 전반에 걸쳐 사용가능
+web.xml에 <servlet>밖에 <context-param>을 작성하여 선언
+호출시 ServletContext application = getServletContext();를 통해 application객체를 생성
+	application.getInitParameter("name")을 통해 호출
+
+
+자주사용하는용도
+		Integer icount = (Integer) application.getAttribute("count");
+		if(icount == null) {
+			icount = 1;
+			application.setAttribute("count", icount);
+		}else {
+			application.setAttribute("count", icount+1);
+		}
+
+=================================================================================================================================
+
+Project MMS2
+
+Controller(servlet) model(class) view(jsp)
+생각하여 프로젝트 작성
+servlet -> class -> jsp
+jsp는 단순히 view이기 떄문에 db에서 데이터를 가져오지 못한다.
+
+1. 테이블관련하여 DTO 생성
+2. DAO생성자를 통해 JNDI/Connection pool이용  db연동
+3. Command 인터 페이스 생성
+4. Controller(servlet)생성 model(class)의 abstract method실행
+5. Model(class) 생성
+	Command class에서 하는일
+	1.Client가 보내준 데이터 획득 및 가공 
+		(ex. request.getParameter;)
+	2.DAO 객체 생성 및 해당 메서드 호출
+	3.Data binding	(pageContext,request,session,application)
+		(ex. request.setAttribute("name",Object);)
+	4.forwarding
+6. View(jsp)생성
+
+4~6반복
+=================================================================================================================================
+jsp 	(https://blog.naver.com/nuberus/221472319249)
+
+expression tag	<%= %> 		--> <% out.print() %>
+주석 작성은 <%--	--%>
+expression language(EL)
+${dto.age}			--> dto.getAge
+3항연산자 또한 지원한다.
+ex)	${empty login ? '로그인':'로그아웃'}	
+	cf) empty login	--> login==null
+
+
+=================================================================================================================================
+session
+
+login관련 활동
+session="false"
+login과 관련된	login.jsp에서는 session=false로 설정해둬야 한다.(1차적으로 로그인을 확인할 수 있는 방법)
+
+
+session은 server에 저장되지만
+session에 대한 위치정보인 JSession의 값은 client에 넘겨준다.
+그렇기에 request를 통해 session을 생성한다.
+ex)	HttpSession session = request.getSession();
+	getSession()	=	getSession(true)	세션이 있으면 세션 return 없으면 생성하여 return
+	getSession(false)				세션이 있으면 세션 return 없으면 null return
+
+
+
+
+logout 방법 3가지
+1. 세션시간 0~1sec 설정
+	// session.setMaxInactiveInterval(1) method호출	//(servers의 web.xml에서는 단위가 분이었지만 이곳은 초)
+2. 세션 제거
+	// session.invalidate();
+3.세션에 바인딩된 속성 제거
+	// session.removeAttribute("attribute");

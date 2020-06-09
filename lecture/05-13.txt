@@ -1,0 +1,23 @@
+객체 = object = instance = bean = entity
+약간의 의미가 다를지는 몰라도 가르키는 대상은 같다.
+
+1.Process클래스 생성(디폴트 생성자까지만 생성하고 안은 비워놓기.
+2.MainEx의 main method에서 Process클래스를 이용해 익명의 객체 1개 생성
+2.5 MemberDTO-DB
+3.Command 인터페이스 생성
+4.InsertCommand SelectCommand updateCommand DeleteCommand 껍데기 생성
+5.InsertCommand 구현A
+6.SelectCommand 구현B
+7.UpdateCommand 구현C
+8.DeleteCommand 구현D
+9.Process 클래스의 디폴트 생성자 구현
+10 실행
+
+
+lotto
+1. 입력-1~45  	int 6개 + 당첨결과String list.add()
+2. 조회		list =db get
+3. 추첨		
+4. 당첨현황
+5. 종료
+

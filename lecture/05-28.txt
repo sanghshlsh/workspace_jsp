@@ -1,0 +1,73 @@
+
+jsp-
+expression tag
+<%= %>
+<%-- jsp주석	 --%>
+
+
+https://blog.naver.com/nuberus/221472319249
+
+expression language
+${dto.age} -->dto.getAge
+3항연산자 또한 지원
+ex)${empty login ? '로그인' : '로그아웃'}
+empty login --> login == null
+
+jsp 내장객체
+
+request
+response
+out
+application
+ssesion	 : scpoe(시간,브라우저)
+pagecontext
+
+
+member varchar2(8)
+ALTER TABLE member add (pw varchar2(8))
+
+
+update member set pw = '1';
+
+alter table member modify pw varchar2(8) not null;
+
+로그인화면에서는 세션을 false로 설정(로그인과정에서는 세션이 없다면 생성하여 반환 다른과정에서는 없으면 없는대로 있으면 활용히기위해)
+
+
+clinet			server
+	     --->
+
+
+session은 server에 저장
+
+session이 저장된 위치 JSessionID = "xxxxxxxxxx";
+			이값을 client에 넘겨줌
+이 JSessionID는 client에 있기 때문에 request로 session을 생성한다.
+
+servers->tomcat7->web.xml
+session-timeout
+30 단위 분
+
+select * from member;
+insert into member (id,name,age,pw) values ('m001','1',1,'1');
+commit;
+
+
+회원 삭제 후 자동 로그아웃
+
+회원 가입 때 비밀번호 입력가능하게 하도록
+
+
+회원 정보 수정 때 로그인 되어있는 상황에서 수정가능하게
+		String id = request.getParameter("id");
+		String name = request.getParameter("name");
+		String sAge = request.getParameter("age");
+		int age = 0;
+		if (sAge != null) {
+			age = Integer.parseInt(sAge);
+		}
+					MemberDAO dao = new MemberDAO();
+					dao.update(new MemberDTO(id, name, age));
+					response.sendRedirect("select.do");
+	
+	}
