@@ -23,6 +23,7 @@
 		map.put("/insert.bo", "InsertCommand");
 		
 		request.setAttribute("map", map);
+		if(map.get("/select.bo?id=name").equalsIgnoreCase("/select.bo")){out.print("a");}
 	%>
 	<%-- map의 el문은 기억해두자 
 	

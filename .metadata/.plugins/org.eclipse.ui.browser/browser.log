@@ -53,3 +53,6 @@
 
 6월 09, 2020 09:09:46.81 NEW SESSION
 6월 09, 2020 09:09:46.81 [1888:2356:0609/090946.816:ERROR:device_event_log_impl.cc(208)] [09:09:46.816] Bluetooth: bluetooth_adapter_winrt.cc:1060 Getting Default Adapter failed.
+6월 09, 2020 16:29:46.14 [1888:5220:0609/162946.143:ERROR:socket_stream.cc(218)] Closing stream with result -2
+6월 09, 2020 16:29:48.26 [1888:5220:0609/162948.264:ERROR:socket_stream.cc(218)] Closing stream with result -2
+6월 09, 2020 16:55:51.85 [1888:5220:0609/165547.618:ERROR:connection_factory_impl.cc(420)] Failed to connect to MCS endpoint with error -106
