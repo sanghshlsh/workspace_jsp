@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring accessors="true" comment="Delete 2 elements from project &apos;ProjectBoard&apos;&#x0D;&#x0A;- Original project: &apos;ProjectBoard&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     deleteUI.jsp&#x0D;&#x0A;     update.jsp" description="Delete elements" element1="src/kr/co/command/deleteUI.jsp" element2="src/kr/co/command/update.jsp" elements="0" flags="589830" id="org.eclipse.jdt.ui.delete" resources="2" stamp="1593142061625" subPackages="false" version="1.0"/>
-</session>

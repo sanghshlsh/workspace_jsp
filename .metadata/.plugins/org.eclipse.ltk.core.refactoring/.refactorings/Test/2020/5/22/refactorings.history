@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring accessors="true" comment="Delete 2 elements from project &apos;Test&apos;&#x0D;&#x0A;- Original project: &apos;Test&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     com.naver.PasswordServlet.java&#x0D;&#x0A;     NewFile2.jsp" description="Delete elements" element1="WebContent/NewFile2.jsp" element2="/src&lt;com.naver{PasswordServlet.java" elements="1" flags="589830" id="org.eclipse.jdt.ui.delete" resources="1" stamp="1590391126414" subPackages="false" version="1.0"/>
-</session>
