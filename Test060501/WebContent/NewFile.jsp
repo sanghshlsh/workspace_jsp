@@ -32,7 +32,7 @@
 
 			$("button").click(function(event) {
 				event.preventDefault();
-
+		
 				var id = $("#id").val();
 
 $.ajax({
