@@ -130,7 +130,7 @@
              Note: The pattern used is equivalent to using pattern="common" -->
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log." suffix=".txt"/>
 
-      <Context docBase="C:\workspace_jsp\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\ROOT" path="" reloadable="false"/><Context docBase="C:\workspace_jsp\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\Project_Board" path="/Project_Board" reloadable="true" source="org.eclipse.jst.jee.server:Project_Board"/></Host>
+      <Context docBase="C:\workspace_jsp\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\ROOT" path="" reloadable="false"/><Context docBase="C:\workspace_jsp\Board2\WebContent" path="/Board" reloadable="true" source="org.eclipse.jst.jee.server:Board2"><Resources className="org.eclipse.jst.server.tomcat.loader.WtpDirContext" extraResourcePaths="/WEB-INF/classes|C:\workspace_jsp\Board2\build\classes" virtualClasspath="C:\workspace_jsp\Board2\build\classes"/><Loader className="org.eclipse.jst.server.tomcat.loader.WtpWebappLoader" useSystemClassLoaderAsParent="false" virtualClasspath="C:\workspace_jsp\Board2\build\classes"/><JarScanner scanAllDirectories="true"/></Context></Host>
     </Engine>
   </Service>
 </Server>

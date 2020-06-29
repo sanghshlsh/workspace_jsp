@@ -33,7 +33,7 @@ public class InsertCommand implements Command {
 //				// TODO Auto-generated catch block
 //				e.printStackTrace();
 //			}
-//		}
+//		} asasas
 		return new CommandAction(true, "list.do");
 	}
 

@@ -1,0 +1,15 @@
+https://spring.io/tools
+
+Spring Tools 4 for Eclipse
+window 64-bit
+
+
+압축풀고 내부 content압축파일 압축풀어
+
+경로 c\workspace_spring으로 지정
+
+
+
+STS의 HELP메뉴에서 MARKET PLACE 선택 후
+검색창에 spring 입력 후 검색
+spring tools 3 add-on install
