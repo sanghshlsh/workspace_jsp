@@ -1,0 +1,64 @@
+package kr.co.command;
+
+import java.io.File;
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
+import kr.co.dao.BoardDAO;
+import kr.co.domain.BoardDTO;
+import kr.co.domain.CommandAction;
+
+public class InsertCommand implements Command {
+
+	@Override
+	public CommandAction execute(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		MultipartRequest multi = new MultipartRequest(request, "C:"+File.separator+"upload", 
+				10*1024*1024, "utf-8",
+				new DefaultFileRenamePolicy());
+		String fileName = multi.getFilesystemName("file");
+		
+
+		String category = multi.getParameter("category");
+		String location = multi.getParameter("location");
+		String sMoney = multi.getParameter("money");
+		int money = 0;
+		if (sMoney != null) {
+			money = Integer.valueOf(sMoney);
+		}		
+		String content = multi.getParameter("content");
+		String id = multi.getParameter("id");
+		String title = multi.getParameter("title");
+		System.out.println("카테고리"+category+"위치"+location+"금액"+money+"내용"+content+"아이디"+id+"제목"+title);
+		BoardDAO dao =new BoardDAO();
+		dao.insert(new BoardDTO(0, id, title, content, 0, null, money, category, location, 0));
+		
+		
+//		String category = request.getParameter("category");
+//		String location = request.getParameter("location");
+//		String sMoney = request.getParameter("money");
+//		int money = 0;
+//		if (sMoney != null) {
+//			money = Integer.valueOf(sMoney);
+//		}		
+//		String content = request.getParameter("content");
+//		String id = request.getParameter("id");
+//		String title = request.getParameter("title");
+//		System.out.println("카테고리"+category+"위치"+location+"금액"+money+"내용"+content+"아이디"+id+"제목"+title);
+//		BoardDAO dao =new BoardDAO();
+//		dao.insert(new BoardDTO(0, id, title, content, 0, null, money, category, location, 0));
+		
+		//		dao.attach(request);
+
+		
+//		return new CommandAction(false, "list.do");
+		return new CommandAction(false, "insertui.do");
+	}
+
+}

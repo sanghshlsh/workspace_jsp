@@ -1,0 +1,31 @@
+package kr.co.command;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import kr.co.domain.CommandAction;
+
+public class InsertCommand implements Command {
+
+	@Override
+	public CommandAction execute(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String category = request.getParameter("category");
+		String location = request.getParameter("location");
+		String sMoney = request.getParameter("money");
+		int money = 0;
+		if (sMoney != null) {
+			money = Integer.valueOf(sMoney);
+		}		
+		String content = request.getParameter("content");
+
+		
+		
+		
+		return new CommandAction(false, "list.do");
+	}
+
+}
